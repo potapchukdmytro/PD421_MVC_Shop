@@ -1,5 +1,6 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using PD421_MVC_Shop;
+using PD421_MVC_Shop.Repositories.Category;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,15 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     string? connectionString = builder.Configuration.GetConnectionString("SqlServer");
     options.UseSqlServer(connectionString);
 });
+
+// Клас існує в тільки в одному екземплярі https://refactoring.guru/uk/design-patterns/singleton
+// builder.Services.AddSingleton<CategoryRepository>();
+
+// Створює новий об'єкт щоразу коли його запитують
+//builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+
+// Створює новий об'єкт для кожного HTTP запиту
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 var app = builder.Build();
 

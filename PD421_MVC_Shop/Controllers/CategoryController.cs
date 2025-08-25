@@ -1,21 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PD421_MVC_Shop.Models;
+using PD421_MVC_Shop.Repositories.Category;
 
 namespace PD421_MVC_Shop.Controllers
 {
     public class CategoryController : Controller
     {
-        private readonly AppDbContext _context;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public CategoryController(AppDbContext context)
+        public CategoryController(ICategoryRepository categoryRepository)
         {
-            _context = context;
+            _categoryRepository = categoryRepository;
         }
 
         public IActionResult Index()
         {
-            IEnumerable<Category> categories = _context.Categories;
-
+            IEnumerable<Category> categories = _categoryRepository.Categories;
             return View(categories);
         }
 
@@ -28,23 +28,23 @@ namespace PD421_MVC_Shop.Controllers
         // POST
         [HttpPost]
         [ValidateAntiForgeryToken] // Для захисту від CSRF атак
-        public IActionResult Create(Category model)
+        public async Task<IActionResult> Create(Category model)
         {
-            bool res = _context.Categories.Any(c => c.Name.ToLower() == model.Name.ToLower());
+            bool res = await _categoryRepository.IsExistsAsync(model.Name);
             if(res)
             {
                 return View();
             }
 
-            _context.Categories.Add(model);
-            _context.SaveChanges();
+            await _categoryRepository.CreateAsync(model);
+            await _categoryRepository.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
         // GET
-        public IActionResult Update(int id)
+        public async Task<IActionResult> Update(int id)
         {
-            var model = _context.Categories.Find(id);
+            var model = await _categoryRepository.GetByIdAsync(id);
             if(model == null)
             {
                 return RedirectToAction("Index");
@@ -56,30 +56,24 @@ namespace PD421_MVC_Shop.Controllers
         // POST
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Update(Category model)
+        public async Task<IActionResult> Update(Category model)
         {
-            bool res = _context.Categories.Any(c => c.Name.ToLower() == model.Name.ToLower());
+            bool res = await _categoryRepository.IsExistsAsync(model.Name);
             if (res)
             {
                 return View();
             }
 
-            _context.Update(model);
-            _context.SaveChanges();
+            _categoryRepository.Update(model);
+            await _categoryRepository.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
         // GET
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var model = _context.Categories.Find(id);
-            if (model == null)
-            {
-                return RedirectToAction("Index");
-            }
-
-            _context.Categories.Remove(model);
-            _context.SaveChanges();
+            await _categoryRepository.DeleteAsync(id);
+            await _categoryRepository.SaveChangesAsync();
             return RedirectToAction("Index");
         }
     }
