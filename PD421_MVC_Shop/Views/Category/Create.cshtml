@@ -1,4 +1,4 @@
-﻿@model Category
+﻿@model CreateCategoryVM
 @{
     ViewData["Title"] = "Створення категорії";
 }
@@ -9,12 +9,18 @@
         <div class="mb-3 mt-3 row">
             <label>Назва</label>
             <div>
-                <input type="text" class="form-control" asp-for="Name"/>
+                <input type="text" class="form-control" asp-for="Name" maxlength="100" />
+            </div>
+            <div style="color: red;" class="form-text ms-1">
+                <span asp-validation-for="Name"></span>
             </div>
         </div>
-        <div class="m-2 d-flex p-1">
-            <input type="submit" value="Створити" class="flex-grow-1 m-1 btn btn-success"/>
+        <div class="mt-2 d-flex p-1">
+            <input type="submit" value="Створити" class="flex-grow-1 m-1 btn btn-success" />
             <a asp-action="Index" class="flex-grow-1 m-1 btn btn-dark">Повернутися</a>
+        </div>
+        <div class="form-text mt-1 ms-1 text-center text-danger">
+            <span asp-validation-for="UniqueNameError"></span>
         </div>
     </form>
 </div>

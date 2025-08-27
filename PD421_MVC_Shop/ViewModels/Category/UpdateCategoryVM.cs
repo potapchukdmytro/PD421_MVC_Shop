@@ -1,15 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PD421_MVC_Shop.Models
+namespace PD421_MVC_Shop.ViewModels.Category
 {
-    public class Category
+    public class UpdateCategoryVM
     {
-        [Key]
         public int Id { get; set; }
         [Required(ErrorMessage = "Вкажіть ім'я")]
         [MaxLength(50, ErrorMessage = "Максимально довжина 50 символів")]
-        public required string Name { get; set; }
-
-        public List<Product> Products { get; set; } = []; // Initialize to an empty collection
+        public string? Name { get; set; }
+        public string? UniqueNameError { get; set; }
     }
 }
