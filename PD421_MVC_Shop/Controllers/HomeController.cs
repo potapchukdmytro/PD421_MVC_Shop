@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using PD421_MVC_Shop.Models;
+using PD421_MVC_Shop.ViewModels.Home;
 
 namespace PD421_MVC_Shop.Controllers
 {
@@ -17,8 +18,13 @@ namespace PD421_MVC_Shop.Controllers
 
         public IActionResult Index()
         {
-            IEnumerable<Product> products = _context.Products;
-            return View(products);
+            var viewModel = new HomeVM
+            {
+                Categories = _context.Categories,
+                Products = _context.Products
+            };
+
+            return View(viewModel);
         }
 
         public IActionResult Privacy()
