@@ -1,0 +1,61 @@
+﻿@model CreateProductVM
+@{
+    ViewData["Title"] = "Створення товару";
+}
+
+<div class="w-50 m-auto border-2 p-2">
+    <h1 class="text-center">Створення товару</h1>
+    <form class="w-75 m-auto" asp-action="Create" method="post" enctype="multipart/form-data">
+        @* name *@
+        <div class="mb-3 mt-3 row">
+            <label>Назва</label>
+            <div>
+                <input type="text" class="form-control" asp-for="Name" maxlength="100" />
+            </div>
+        </div>
+        @* description *@
+        <div class="mb-3 mt-3 row">
+            <label>Опис</label>
+            <div>
+                <textarea asp-for="Description" class="form-control"></textarea>
+            </div>
+        </div>
+        @* price *@
+        <div class="mb-3 mt-3 row">
+            <label>Ціна</label>
+            <div>
+                <input min="0" type="number" class="form-control" asp-for="Price" />
+            </div>
+        </div>
+        @* count *@
+         <div class="mb-3 mt-3 row">
+            <label>Кількість</label>
+            <div>
+                <input min="0" type="number" class="form-control" asp-for="Count" />
+            </div>
+        </div>
+        @* category *@
+        <div class="mb-3 mt-3 row">
+            <label>Категорія</label>
+            <div>
+                <select class="form-select" asp-for="CategoryId">
+                    @foreach(var category in Model.Categories)
+                    {
+                        <option value="@category.Id">@category.Name</option>
+                    }
+                </select>
+            </div>
+        </div>
+        @* picture *@
+        <div class="mb-3 mt-3 row">
+            <label>Зображення</label>
+            <div>
+                <input type="file" class="form-control" asp-for="Image" accept="image/*" />
+            </div>
+        </div>
+        <div class="mt-2 d-flex p-1">
+            <input type="submit" value="Створити" class="flex-grow-1 m-1 btn btn-success" />
+            <a asp-action="Index" class="flex-grow-1 m-1 btn btn-dark">Повернутися</a>
+        </div>
+    </form>
+</div>
