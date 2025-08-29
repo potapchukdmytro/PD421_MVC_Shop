@@ -6,10 +6,10 @@
 <div class="container">
     @* Categories *@
     <div class="d-flex justify-content-center">
-        <button class="btn btn-success mx-2">Всі категорії</button>
+        <a asp-action="Index" class="btn btn-success mx-2">Всі категорії</a>
         @foreach(var category in Model.Categories)
         {
-            <button class="btn btn-success mx-2">@category.Name</button>
+            <a asp-action="Index" asp-route-category="@category.Name" class="btn btn-success mx-2">@category.Name</a>
         }
     </div>
 

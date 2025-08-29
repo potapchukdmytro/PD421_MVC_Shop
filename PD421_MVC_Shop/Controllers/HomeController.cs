@@ -16,12 +16,20 @@ namespace PD421_MVC_Shop.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string? category)
         {
+            IQueryable<Product> products = _context.Products;
+
+            if(!string.IsNullOrEmpty(category))
+            {
+                category = category.Trim().ToLower();
+                products = products.Where(p => p.Category != null && p.Category.Name.ToLower() == category);
+            }
+
             var viewModel = new HomeVM
             {
                 Categories = _context.Categories,
-                Products = _context.Products
+                Products = products
             };
 
             return View(viewModel);
