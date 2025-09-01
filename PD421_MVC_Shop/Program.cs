@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PD421_MVC_Shop;
+using PD421_MVC_Shop.Initializer;
 using PD421_MVC_Shop.Repositories.Category;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -44,5 +45,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
+
+app.Seed();
 
 app.Run();
