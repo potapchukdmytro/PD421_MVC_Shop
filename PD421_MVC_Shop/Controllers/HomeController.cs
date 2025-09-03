@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using PD421_MVC_Shop.Models;
+using PD421_MVC_Shop.Repositories.Products;
+using PD421_MVC_Shop.ViewModels;
 using PD421_MVC_Shop.ViewModels.Home;
 
 namespace PD421_MVC_Shop.Controllers
@@ -9,27 +11,41 @@ namespace PD421_MVC_Shop.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly AppDbContext _context;
+        private readonly IProductRepository _productRepository;
 
-        public HomeController(ILogger<HomeController> logger, AppDbContext context)
+        public HomeController(ILogger<HomeController> logger, AppDbContext context, IProductRepository productRepository)
         {
             _logger = logger;
             _context = context;
+            _productRepository = productRepository;
         }
 
-        public IActionResult Index(string? category)
+        public IActionResult Index(string? category, int? page)
         {
-            IQueryable<Product> products = _context.Products;
+            int currentPage = page ?? 1;
 
-            if(!string.IsNullOrEmpty(category))
+            var pagination = new Pagination
             {
-                category = category.Trim().ToLower();
-                products = products.Where(p => p.Category != null && p.Category.Name.ToLower() == category);
-            }
+                Page = currentPage,
+                PageSize = Settings.PaginationPageSize
+            };
+
+            var products =
+                !string.IsNullOrEmpty(category)
+                ? _productRepository.GetByCategory(category, pagination)
+                : _productRepository.GetProducts(pagination);
+
+            var productsList = new ProductListVM
+            {
+                Pagination = pagination,
+                Products = products
+            };
 
             var viewModel = new HomeVM
             {
                 Categories = _context.Categories,
-                Products = products
+                ProductList = productsList,
+                CategoryName = category
             };
 
             return View(viewModel);

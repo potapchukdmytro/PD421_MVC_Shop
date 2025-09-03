@@ -2,6 +2,7 @@
 using PD421_MVC_Shop;
 using PD421_MVC_Shop.Initializer;
 using PD421_MVC_Shop.Repositories.Category;
+using PD421_MVC_Shop.Repositories.Products;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +24,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 // Створює новий об'єкт для кожного HTTP запиту
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
 
 var app = builder.Build();
 
