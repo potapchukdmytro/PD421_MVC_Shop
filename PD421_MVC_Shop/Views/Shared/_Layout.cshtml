@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject IHttpContextAccessor HttpContextAccessor
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -19,7 +20,7 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                <div class="flex-grow-1 navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Каталог</a>
@@ -37,6 +38,11 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Категорії</a>
                         </li>
                     </ul>
+                    <a>
+                        <div class="nav-cart">
+                            <i class="bi bi-cart"></i>(@HttpContextAccessor.HttpContext.Session.CartCount())
+                        </div>
+                    </a>
                 </div>
             </div>
         </nav>

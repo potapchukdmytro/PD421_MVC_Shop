@@ -89,3 +89,13 @@ body {
     font-weight: bold;
     color: forestgreen;
 }
+
+.nav-cart {
+    font-size: 1.5em;
+    margin-right: 20px;
+}
+
+.nav-cart:hover {
+    cursor: pointer;
+    opacity: 0.65;
+}

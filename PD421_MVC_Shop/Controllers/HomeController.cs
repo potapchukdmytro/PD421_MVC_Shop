@@ -1,8 +1,11 @@
 using System.Diagnostics;
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using PD421_MVC_Shop.Models;
 using PD421_MVC_Shop.Repositories.Products;
+using PD421_MVC_Shop.Services;
 using PD421_MVC_Shop.ViewModels;
+using PD421_MVC_Shop.ViewModels.Cart;
 using PD421_MVC_Shop.ViewModels.Home;
 
 namespace PD421_MVC_Shop.Controllers
@@ -18,6 +21,12 @@ namespace PD421_MVC_Shop.Controllers
             _logger = logger;
             _context = context;
             _productRepository = productRepository;
+        }
+
+        public IActionResult AddToCart(int productId)
+        {
+            HttpContext.Session.AddToCart(productId);
+            return RedirectToAction("Index");
         }
 
         public IActionResult Index(string? category, int? page)
