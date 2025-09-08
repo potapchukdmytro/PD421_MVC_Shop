@@ -1,12 +1,10 @@
-using System.Diagnostics;
-using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using PD421_MVC_Shop.Models;
 using PD421_MVC_Shop.Repositories.Products;
 using PD421_MVC_Shop.Services;
 using PD421_MVC_Shop.ViewModels;
-using PD421_MVC_Shop.ViewModels.Cart;
 using PD421_MVC_Shop.ViewModels.Home;
+using System.Diagnostics;
 
 namespace PD421_MVC_Shop.Controllers
 {

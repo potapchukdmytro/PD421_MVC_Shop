@@ -38,6 +38,9 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Category" asp-action="Index">Категорії</a>
                         </li>
                     </ul>
+                    <div class="me-2">
+                        <partial name="_LoginPartial" />
+                    </div>
                     <a>
                         <div class="nav-cart">
                             <i class="bi bi-cart"></i>(@HttpContextAccessor.HttpContext.Session.CartCount())
