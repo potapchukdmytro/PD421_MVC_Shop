@@ -1,4 +1,5 @@
-﻿using PD421_MVC_Shop.Models;
+﻿using Microsoft.AspNetCore.Identity;
+using PD421_MVC_Shop.Models;
 
 namespace PD421_MVC_Shop.Initializer
 {
@@ -10,7 +11,41 @@ namespace PD421_MVC_Shop.Initializer
             {
                 using var scope = app.ApplicationServices.CreateScope();
                 var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+                var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+                var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
+                // Roles and Users
+                if (!context.Roles.Any())
+                {
+                    var adminRole = new IdentityRole { Name = "admin" };
+                    var userRole = new IdentityRole { Name = "user" };
+
+                    await roleManager.CreateAsync(adminRole);
+                    await roleManager.CreateAsync(userRole);
+
+                    var admin = new ApplicationUser
+                    {
+                        Email = "admin@mail.com",
+                        UserName = "admin",
+                        EmailConfirmed = true
+                    };
+
+                    await userManager.CreateAsync(admin, "Qwerty123!");
+
+                    var user = new ApplicationUser
+                    {
+                        Email = "user@mail.com",
+                        UserName = "user",
+                        EmailConfirmed = true
+                    };
+
+                    await userManager.CreateAsync(user, "Qwerty123!");
+
+                    await userManager.AddToRoleAsync(admin, "admin");
+                    await userManager.AddToRoleAsync(user, "user");
+                }
+
+                // Categories and Products
                 if (!context.Categories.Any())
                 {
                     var categories = new Category[5]
