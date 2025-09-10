@@ -28,6 +28,12 @@ namespace PD421_MVC_Shop.Controllers
             return RedirectToAction("Index");
         }
 
+        public IActionResult RemoveFromCart(int productId)
+        {
+            HttpContext.Session.RemoveFromCart(productId);
+            return RedirectToAction("Index");
+        }
+
         public IActionResult Index(string? category, int? page)
         {
             int currentPage = page ?? 1;

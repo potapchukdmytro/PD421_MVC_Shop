@@ -26,6 +26,21 @@ namespace PD421_MVC_Shop.Services
             }
         }
 
+        public static void RemoveFromCart(this ISession session, int productId)
+        {
+            if(session.ItemInCart(productId))
+            {
+                var items = session.GetCartItems();
+                var itemIndex = items.FindIndex(i => i.ProductId == productId);
+                if (itemIndex >= 0)
+                {
+                    items.RemoveAt(itemIndex);
+                    var json = JsonSerializer.Serialize(items);
+                    session.SetString(Settings.CartKey, json);
+                }
+            }
+        }
+
         public static int CartCount(this ISession session)
         {
             return session.GetCartItems().Count();
