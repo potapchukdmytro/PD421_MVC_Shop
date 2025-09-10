@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PD421_MVC_Shop.Models;
 using PD421_MVC_Shop.Repositories.Products;

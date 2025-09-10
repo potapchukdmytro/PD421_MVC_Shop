@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using PD421_MVC_Shop.Models;
 using PD421_MVC_Shop.Repositories.Category;
 using PD421_MVC_Shop.ViewModels.Category;
 
 namespace PD421_MVC_Shop.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class CategoryController : Controller
     {
         private readonly ICategoryRepository _categoryRepository;
@@ -91,7 +93,7 @@ namespace PD421_MVC_Shop.Controllers
                 model.Name = viewModel.Name;
                 _categoryRepository.Update(model);
                 await _categoryRepository.SaveChangesAsync();
-            }            
+            }
             return RedirectToAction("Index");
         }
 
