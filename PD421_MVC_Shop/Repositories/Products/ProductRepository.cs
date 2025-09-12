@@ -12,7 +12,7 @@ namespace PD421_MVC_Shop.Repositories.Products
             _context = context;
         }
 
-        public IQueryable<Product> Products => _context.Products;
+        public IQueryable<Product> Products => _context.Products.OrderByDescending(p => p.Count);
 
         public IQueryable<Product> GetByCategory(string category, Pagination? pagination = null)
         {
