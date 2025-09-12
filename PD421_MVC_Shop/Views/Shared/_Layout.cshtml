@@ -49,7 +49,9 @@
                     </div>
                     <a>
                         <div class="nav-cart">
-                            <i class="bi bi-cart"></i>(@HttpContextAccessor.HttpContext.Session.CartCount())
+                            <a asp-controller="Cart" style="text-decoration: none;color: black;">
+                                <i class="bi bi-cart"></i>(@HttpContextAccessor.HttpContext.Session.CartCount())
+                            </a>
                         </div>
                     </a>
                 </div>
